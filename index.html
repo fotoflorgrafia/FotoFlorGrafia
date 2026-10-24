@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FotoFlorGrafia | Fotografia de Paisagem & Natureza</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0e1111',
+                            card: '#161b1d',
+                            accent: '#4a7c59',
+                            accentLight: '#689f78',
+                            gold: '#d4af37',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        logo: ['"Great Vibes"', '"Alex Brush"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth scrolling */
+        /* Custom Script Logo Component with Leaves */
+        .logo-script-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .logo-script-text {
+            font-family: 'Great Vibes', 'Alex Brush', cursive;
+            letter-spacing: 0.5px;
+        }
+
+        /* Watermark styling for Lightbox */
+        .watermark-overlay {
+            position: absolute;
+            bottom: 24px;
+            right: 28px;
+            pointer-events: none;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.7;
+        }
+
+        /* Image hover zoom transition */
+        .photo-card img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .photo-card:hover img {
+            transform: scale(1.06);
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-text font-sans antialiased selection:bg-brand-accent selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-brand-dark/85 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo com Caligrafia e Folhas Fiéis -->
+            <a href="#" class="flex items-center group">
+                <div class="logo-script-container py-1">
+                    <!-- Estrutura Caligráfica do Logótipo -->
+                    <div class="relative flex flex-col items-center">
+                        <span class="logo-script-text text-3xl sm:text-4xl text-white group-hover:text-brand-accentLight transition-colors flex items-center relative">
+                            <!-- Diafragma de câmara no primeiro 'o' -->
+                            <span>F</span>
+                            <span class="inline-flex items-center justify-center mx-[1px] text-[0.6em] text-white/90">
+                                <i class="fa-solid fa-circle-notch animate-spin-slow"></i>
+                            </span>
+                            <span>t</span>
+                            <span class="relative">
+                                o
+                                <!-- Ramificação de folhas no topo -->
+                                <svg class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 text-brand-accentLight fill-current pointer-events-none" viewBox="0 0 24 24">
+                                    <path d="M17,8C15.3,8 13.8,8.8 12.8,10C11.6,8.7 9.8,8 7.8,8C4.6,8 2,10.6 2,13.8C2,17.5 5.5,20 10.5,21.8L12,22.3L13.5,21.8C18.5,20 22,17.5 22,13.8C22,10.6 19.4,8 17,8Z" opacity="0" />
+                                    <path d="M12 2C12 2 11 6 8 8C5 10 2 10 2 10C2 10 6 12 8 15C10 18 10 22 10 22C10 22 12 18 15 17C18 16 22 17 22 17C22 17 18 14 17 11C16 8 12 2 12 2Z" />
+                                </svg>
+                            </span>
+                            <span>FlorGrafia</span>
+
+                            <!-- Traço inferior fluido com folha no fim -->
+                            <svg class="absolute -bottom-2 left-2 w-[90%] h-3 text-brand-accentLight fill-none stroke-current" viewBox="0 0 160 20" stroke-width="2" stroke-linecap="round">
+                                <path d="M 5 5 Q 80 20 145 8 C 150 7 155 12 158 15" />
+                                <!-- Folhinha na ponta do traço -->
+                                <path d="M 150 5 C 153 1 158 2 159 6 C 156 10 151 9 150 5 Z" fill="currentColor" stroke="none" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#galeria" class="text-brand-text hover:text-brand-accentLight transition-colors">Galeria</a>
+                <a href="#sobre" class="text-brand-text hover:text-brand-accentLight transition-colors">Sobre mim</a>
+                <a href="#contacto" class="text-brand-text hover:text-brand-accentLight transition-colors">Contacto</a>
+                <a href="#contacto" class="px-5 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accentLight text-white font-medium transition-all shadow-lg shadow-brand-accent/20 hover:shadow-brand-accent/40 text-xs uppercase tracking-wider">
+                    Pedir Impressão
+                </a>
+            </nav>
+
+            <!-- Mobile menu button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-brand-muted hover:text-white hover:bg-white/5 focus:outline-none" aria-label="Abrir menu">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-card/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="#galeria" class="mobile-link block text-base font-medium text-brand-text hover:text-brand-accentLight py-1">Galeria</a>
+            <a href="#sobre" class="mobile-link block text-base font-medium text-brand-text hover:text-brand-accentLight py-1">Sobre mim</a>
+            <a href="#contacto" class="mobile-link block text-base font-medium text-brand-text hover:text-brand-accentLight py-1">Contacto</a>
+            <div class="pt-2">
+                <a href="#contacto" class="mobile-link inline-block w-full text-center py-3 rounded-full bg-brand-accent text-white font-medium text-sm">Pedir Impressão</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20">
+        <!-- Hero Section -->
+        <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden py-20 px-4">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/70 to-brand-dark z-10"></div>
+            
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80" 
+                 alt="Paisagem Natural Hero" 
+                 class="absolute inset-0 w-full h-full object-cover object-center opacity-40 scale-105 filter blur-[1px]">
+
+            <div class="relative z-20 max-w-4xl mx-auto text-center px-4 space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-brand-accentLight text-xs tracking-widest uppercase font-medium backdrop-blur-md">
+                    <i class="fa-solid fa-camera"></i> Fotografia Autoral
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-white leading-tight">
+                    A poesia da luz gravada na 
+                    <span class="logo-script-text text-brand-accentLight block sm:inline text-6xl sm:text-7xl lg:text-8xl pl-2">Natureza</span>
+                </h1>
+
+                <p class="max-w-2xl mx-auto text-brand-muted text-base sm:text-lg leading-relaxed font-light">
+                    Exploração visual de paisagens intocadas, madrugadas serenas e detalhes efémeros da flora através da lente de Florbela.
+                </p>
+
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#galeria" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-accent hover:bg-brand-accentLight text-white font-medium transition-all shadow-xl shadow-brand-accent/25 hover:scale-105 flex items-center justify-center gap-2">
+                        <span>Ver Portfólio</span>
+                        <i class="fa-solid fa-arrow-down text-sm"></i>
+                    </a>
+                    <a href="#sobre" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 backdrop-blur-sm transition-all hover:border-white/20">
+                        Conhecer a Fotógrafa
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeria / Portfólio Section -->
+        <section id="galeria" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <h2 class="text-xs uppercase tracking-widest text-brand-accentLight font-semibold mb-2">Galeria</h2>
+                    <h3 class="text-3xl sm:text-4xl font-light text-white">Fotografias em Destaque</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2 bg-brand-card p-1.5 rounded-2xl border border-white/5 self-start md:self-auto">
+                    <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-xs font-medium transition-all bg-brand-accent text-white shadow">
+                        Todas
+                    </button>
+                    <button data-filter="paisagem" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium transition-all text-brand-muted hover:text-white hover:bg-white/5">
+                        Paisagem
+                    </button>
+                    <button data-filter="por-do-sol" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium transition-all text-brand-muted hover:text-white hover:bg-white/5">
+                        Pôr do Sol
+                    </button>
+                    <button data-filter="natureza" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium transition-all text-brand-muted hover:text-white hover:bg-white/5">
+                        Natureza
+                    </button>
+                    <button data-filter="detalhes" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium transition-all text-brand-muted hover:text-white hover:bg-white/5">
+                        Detalhes
+                    </button>
+                </div>
+            </div>
+
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Conteúdo gerado via JS -->
+            </div>
+        </section>
+
+        <!-- Secção Sobre mim -->
+        <section id="sobre" class="bg-brand-card/60 border-y border-white/5 py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-sm lg:max-w-none rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80" 
+                             alt="Florbela - Fotógrafa" 
+                             class="w-full h-[480px] object-cover object-top">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 text-center">
+                            <span class="logo-script-text text-4xl text-white">Florbela</span>
+                            <p class="text-xs text-brand-accentLight uppercase tracking-wider mt-1">Fotógrafa de Natureza & Fundadora</p>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-brand-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-brand-accentLight font-semibold">Sobre a Autora</span>
+                        <h2 class="text-3xl sm:text-4xl font-light text-white mt-2">Olá, sou a Florbela</h2>
+                    </div>
+
+                    <p class="text-brand-muted leading-relaxed font-light text-base sm:text-lg">
+                        Sempre encontrei no silêncio dos espaços naturais uma forma única de expressão. A <strong class="text-brand-text font-normal logo-script-text text-2xl text-brand-accentLight">FotoFlorGrafia</strong> nasceu da fusão apaixonada entre a arte da fotografia e o amor profundo pela flora e paisagens intocadas.
+                    </p>
+
+                    <p class="text-brand-muted leading-relaxed font-light text-base">
+                        Através da minha câmara, procuro eternizar a luz efémera do alvorecer, os reflexos dourados do entardecer e a delicadeza dos pequenos detalhes que habitualmente passam despercebidos no quotidiano. Cada imagem reflete um momento genuíno de contemplação e ligação com a terra.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                        <div>
+                            <span class="text-2xl sm:text-3xl font-light text-brand-accentLight block">10+</span>
+                            <span class="text-xs text-brand-muted uppercase tracking-wider">Anos de Lente</span>
+                        </div>
+                        <div>
+                            <span class="text-2xl sm:text-3xl font-light text-brand-accentLight block">500+</span>
+                            <span class="text-xs text-brand-muted uppercase tracking-wider">Capturas Únicas</span>
+                        </div>
+                        <div>
+                            <span class="text-2xl sm:text-3xl font-light text-brand-accentLight block">100%</span>
+                            <span class="text-xs text-brand-muted uppercase tracking-wider">Paixão Natural</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção de Contacto -->
+        <section id="contacto" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest text-brand-accentLight font-semibold">Entre em Contacto</span>
+                <h2 class="text-3xl sm:text-4xl font-light text-white mt-2">Vamos conversar?</h2>
+                <p class="text-brand-muted mt-3 text-sm sm:text-base">
+                    Interessado em adquirir impressões em alta resolução, licenciar fotografias ou agendar um projeto editorial? Envie uma mensagem.
+                </p>
+            </div>
+
+            <div class="bg-brand-card p-6 sm:p-10 rounded-3xl border border-white/5 shadow-xl">
+                <div id="contactSuccess" class="hidden mb-6 p-4 rounded-xl bg-brand-accent/20 border border-brand-accent text-brand-accentLight text-sm text-center">
+                    <i class="fa-solid fa-circle-check mr-2"></i> A sua mensagem foi enviada com sucesso! Florbela responderá em breve.
+                </div>
+
+                <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-xs uppercase tracking-wider text-brand-muted mb-2 font-medium">Nome Completo</label>
+                            <input type="text" id="name" required placeholder="O seu nome" 
+                                   class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-xs uppercase tracking-wider text-brand-muted mb-2 font-medium">E-mail</label>
+                            <input type="email" id="email" required placeholder="seu.email@exemplo.com" 
+                                   class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-xs uppercase tracking-wider text-brand-muted mb-2 font-medium">Assunto</label>
+                        <select id="subject" class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors">
+                            <option value="impressao">Aquisição de Impressões Fine Art</option>
+                            <option value="licenciamento">Licenciamento de Imagem</option>
+                            <option value="colaboracao">Proposta de Colaboração</option>
+                            <option value="outro">Outro Assunto</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-xs uppercase tracking-wider text-brand-muted mb-2 font-medium">Mensagem</label>
+                        <textarea id="message" rows="5" required placeholder="Escreva a sua mensagem aqui..." 
+                                  class="w-full bg-brand-dark border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand-accent transition-colors resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full sm:w-auto px-10 py-3.5 rounded-full bg-brand-accent hover:bg-brand-accentLight text-white font-medium transition-all shadow-lg shadow-brand-accent/20 hover:scale-[1.02]">
+                        Enviar Mensagem <i class="fa-regular fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-white/5 py-10 px-4 text-center sm:text-left">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="logo-script-text text-3xl text-white">FotoFlorGrafia</span>
+                <p class="text-xs text-brand-muted mt-1">&copy; <span id="year"></span> FotoFlorGrafia por Florbela. Todos os direitos reservados.</p>
+            </div>
+
+            <div class="flex items-center gap-4 text-brand-muted">
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:text-brand-accentLight hover:bg-white/10 transition-all" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram text-base"></i>
+                </a>
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:text-brand-accentLight hover:bg-white/10 transition-all" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f text-base"></i>
+                </a>
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:text-brand-accentLight hover:bg-white/10 transition-all" aria-label="500px">
+                    <i class="fa-brands fa-500px text-base"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL / LIGHTBOX PARA VER FOTOGRAFIA EM ECRÃ INTEIRO COM MARCA DE ÁGUA IDENTICA -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex flex-col items-center justify-center p-2 sm:p-6 transition-opacity duration-300">
+        
+        <button id="closeLightbox" class="absolute top-4 right-4 z-50 text-white/70 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all focus:outline-none" aria-label="Fechar vista expandida">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <button id="prevPhoto" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all focus:outline-none hidden sm:block" aria-label="Fotografia Anterior">
+            <i class="fa-solid fa-chevron-left text-xl"></i>
+        </button>
+        <button id="nextPhoto" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all focus:outline-none hidden sm:block" aria-label="Próxima Fotografia">
+            <i class="fa-solid fa-chevron-right text-xl"></i>
+        </button>
+
+        <div class="relative max-w-5xl max-h-[80vh] flex items-center justify-center overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+            <img id="lightboxImg" src="" alt="" class="max-h-[80vh] max-w-full object-contain select-none">
+            
+            <!-- Marca de Água Caligráfica Completa com Folhas no Lightbox -->
+            <div class="watermark-overlay">
+                <span class="logo-script-text text-2xl sm:text-3xl text-white/80">FotoFlorGrafia</span>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <h3 id="lightboxTitle" class="text-lg font-medium text-white"></h3>
+            <p id="lightboxCategory" class="text-xs text-brand-accentLight uppercase tracking-widest mt-1"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Dados das Fotografias
+        const photos = [
+            {
+                id: 1,
+                title: "Ocaso Sobre a Albufeira",
+                category: "por-do-sol",
+                categoryLabel: "Pôr do Sol",
+                url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80",
+                desc: "Luz dourada a refletir nas águas tranquilas da serra."
+            },
+            {
+                id: 2,
+                title: "Silêncio da Névoa Matinal",
+                category: "paisagem",
+                categoryLabel: "Paisagem",
+                url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1400&q=80",
+                desc: "Manhã serena entre os pinhais cobertos de neblina."
+            },
+            {
+                id: 3,
+                title: "Gotas de Orvalho em Flor",
+                category: "detalhes",
+                categoryLabel: "Detalhes",
+                url: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1400&q=80",
+                desc: "Pequenos mundos refletidos no orvalho da manhã."
+            },
+            {
+                id: 4,
+                title: "Cascata Escondida da Floresta",
+                category: "natureza",
+                categoryLabel: "Natureza",
+                url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=1400&q=80",
+                desc: "Água cristalina a fluir suavemente no coração da serra."
+            },
+            {
+                id: 5,
+                title: "Horizonte Violeta",
+                category: "por-do-sol",
+                categoryLabel: "Pôr do Sol",
+                url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1400&q=80",
+                desc: "Tons roxos e alaranjados no fecho do dia."
+            },
+            {
+                id: 6,
+                title: "Texturas da Textura Vegetal",
+                category: "detalhes",
+                categoryLabel: "Detalhes",
+                url: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1400&q=80",
+                desc: "A geometria perfeita e orgânica das folhas selvagens."
+            },
+            {
+                id: 7,
+                title: "Montanhas Antigas",
+                category: "paisagem",
+                categoryLabel: "Paisagem",
+                url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80",
+                desc: "Picos imponentes moldados pelo vento e pelo tempo."
+            },
+            {
+                id: 8,
+                title: "Luz Entre as Ramos",
+                category: "natureza",
+                categoryLabel: "Natureza",
+                url: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80",
+                desc: "Raios solares a atravessar a copa das árvores centenárias."
+            },
+            {
+                id: 9,
+                title: "Reflexos de Primavera",
+                category: "detalhes",
+                categoryLabel: "Detalhes",
+                url: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=80",
+                desc: "Cores vibrantes do desabrochar primaveril."
+            }
+        ];
+
+        let currentPhotoIndex = 0;
+        let filteredPhotos = [...photos];
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxCategory = document.getElementById('lightboxCategory');
+        const closeLightbox = document.getElementById('closeLightbox');
+        const prevPhotoBtn = document.getElementById('prevPhoto');
+        const nextPhotoBtn = document.getElementById('nextPhoto');
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function renderGallery(items) {
+            galleryGrid.innerHTML = '';
+            
+            if (items.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-brand-muted">
+                        Nenhuma fotografia encontrada nesta categoria.
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach((photo, index) => {
+                const card = document.createElement('div');
+                card.className = 'photo-card group relative rounded-2xl overflow-hidden bg-brand-card border border-white/5 shadow-lg cursor-pointer animate-fade';
+                card.onclick = () => openLightbox(index);
+
+                card.innerHTML = `
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="${photo.url}" alt="${photo.title}" loading="lazy" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <span class="text-[10px] tracking-widest uppercase text-brand-accentLight font-semibold">${photo.categoryLabel}</span>
+                            <h3 class="text-lg font-medium text-white">${photo.title}</h3>
+                            <p class="text-xs text-brand-muted mt-1 line-clamp-1">${photo.desc}</p>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-brand-accent', 'text-white', 'shadow');
+                    b.classList.add('text-brand-muted');
+                });
+                
+                btn.classList.add('active', 'bg-brand-accent', 'text-white', 'shadow');
+                btn.classList.remove('text-brand-muted');
+
+                const filter = btn.getAttribute('data-filter');
+                if (filter === 'all') {
+                    filteredPhotos = [...photos];
+                } else {
+                    filteredPhotos = photos.filter(p => p.category === filter);
+                }
+                renderGallery(filteredPhotos);
+            });
+        });
+
+        function openLightbox(index) {
+            currentPhotoIndex = index;
+            updateLightboxContent();
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateLightboxContent() {
+            const photo = filteredPhotos[currentPhotoIndex];
+            if (!photo) return;
+            lightboxImg.src = photo.url;
+            lightboxImg.alt = photo.title;
+            lightboxTitle.textContent = photo.title;
+            lightboxCategory.textContent = `${photo.categoryLabel} • FotoFlorGrafia`;
+        }
+
+        function closeLightboxModal() {
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        closeLightbox.addEventListener('click', closeLightboxModal);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightboxModal();
+        });
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+            updateLightboxContent();
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % filteredPhotos.length;
+            updateLightboxContent();
+        }
+
+        prevPhotoBtn.addEventListener('click', (e) => { e.stopPropagation(); prevPhoto(); });
+        nextPhotoBtn.addEventListener('click', (e) => { e.stopPropagation(); nextPhoto(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeLightboxModal();
+            if (e.key === 'ArrowLeft') prevPhoto();
+            if (e.key === 'ArrowRight') nextPhoto();
+        });
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+              function handleFormSubmit(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('contactSuccess');
+            const form = document.getElementById('contactForm');
+            
+            successMsg.classList.remove('hidden');
+            form.reset();
+
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 6000);
+        }
+
+        renderGallery(photos);
+    </script>
+</body>
+</html>
